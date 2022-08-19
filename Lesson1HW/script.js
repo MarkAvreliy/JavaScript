@@ -14,6 +14,7 @@ alert('Task #2. Admin name is: ' + admin);
 //task 3
 let result = 1000 + '108';
 alert('Task #3. 1000 + "108" = ' + result);
+//1000108
 
 //task 4
 /*async
