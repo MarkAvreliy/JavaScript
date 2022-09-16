@@ -211,13 +211,74 @@ const buyButton = {
             if(Object.keys(cart.goods).length === 0){
                 alert("Your cart is empty. Nothing to buy.");
             } else {
-                alert('You have bought all products!')
+                alert('You have bought all products!');
+                alert('Enter your delivery address in to field below please.');
+                collapseCart();
+                delivery();
+                nextButton.run();
+                comment();
+                showCartButton.run();
             }
         })
     },
     run(){
         this.render();
         this.buttonClickBuyButton();
+    }
+}
+
+const nextButton = {
+    buttonNextButton: document.createElement('button'),
+    render(){
+        this.buttonNextButton.id = "nextButton";
+        this.buttonNextButton.setAttribute('class', 'nextButton');
+        this.buttonNextButton.appendChild(document.createTextNode("Next"));
+        document.getElementById("delivery").after(this.buttonNextButton);
+    },
+    buttonClickNextButton() {
+
+        document.getElementById("nextButton").addEventListener('click', (button) => {
+            const isEmpty = str => !str.trim().length;
+            const adrInpValue = document.getElementById("addressInput").value;
+            const comInpValue = document.getElementById("commentInput").value;
+            if( isEmpty(adrInpValue) ) {
+                alert( "Address is empty" );
+            } else {
+                    alert(`Address: ${document.getElementById("addressInput").value}, has been saved.`);
+                    goToComment();
+            }
+            if( !isEmpty(adrInpValue) && !isEmpty(comInpValue) ) {
+                alert( "Your order has been saved." );
+            } else if (!isEmpty(adrInpValue) && isEmpty(comInpValue)) {
+                alert( "Your order has been saved without comment." );
+            }
+        })
+    },
+    run(){
+        this.render();
+        this.buttonClickNextButton();
+    }
+}
+
+const showCartButton = {
+    showCartButton: document.createElement('button'),
+    render(){
+        this.showCartButton.id = "showCartButton";
+        this.showCartButton.setAttribute('class', 'showCartButton');
+        this.showCartButton.appendChild(document.createTextNode("Show Cart"));
+        document.getElementById("comment").after(this.showCartButton);
+    },
+    buttonClickShowCartButton() {
+        document.getElementById("showCartButton").addEventListener('click', (button) => {
+            let fieldCart = document.getElementById('cartPrice');
+            fieldCart.style.height='430px';
+            let fieldComment = document.getElementById('commentInput');
+            fieldComment.style.height='30px';
+        })
+    },
+    run(){
+        this.render();
+        this.buttonClickShowCartButton();
     }
 }
 
@@ -268,7 +329,8 @@ const services ={
                             <p> Carpet ${c} pcs for a total price = ${cp}. </p>
                             <p> RJ45 ${d} pcs for a total price = ${dp}. </p>
                             <p> TOTAL: ${sum}. </p>`;
-    }
+    },
+
 }
 
 function cartShow() {
@@ -283,6 +345,37 @@ function cartPrice() {
     div.setAttribute('class', 'cartPrice');
     div.id='cartPrice';
     document.body.appendChild(div);
+}
+
+function delivery() {
+    let div = document.createElement("div");
+    div.setAttribute('class', 'delivery');
+    div.id='delivery';
+    document.body.appendChild(div);
+    div.innerHTML = "<input type='text' id='addressInput' name='addressInput' value='' class='addressInput' placeholder='Input address here' style='padding:5px;' />";
+
+}
+
+function collapseCart() {
+    let fieldCart = document.getElementById('cartPrice');
+    let buttonBuy = document.getElementById('buyButton');
+    fieldCart.style.height='30px';
+    buttonBuy.style.display = 'none';
+}
+
+function goToComment() {
+    let fieldAddress = document.getElementById('addressInput');
+    let fieldComment = document.getElementById('commentInput');
+    fieldAddress.style.height='30px';
+    fieldComment.style.height='290px';
+}
+
+function comment() {
+    let div = document.createElement("div");
+    div.setAttribute('class', 'comment');
+    div.id='comment';
+    document.getElementById('delivery').after(div);
+    div.innerHTML = "<input type='text' id='commentInput' name='commentInput' value='' class='commentInput' placeholder='Input comment here if needed' style='padding:5px;' />";
 }
 
 function run(){
