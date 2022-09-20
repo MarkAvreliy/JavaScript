@@ -1,0 +1,78 @@
+1.
+создал функцию переносом существующей во внешнюю
+
+function outerFunc() {
+    return  function getDirectionByCode(code) {
+        switch (code) {
+            case 'KeyW':
+            case 'ArrowUp':
+                return 'up';
+            case 'KeyD':
+            case 'ArrowRight':
+                return 'right';
+            case 'KeyS':
+            case 'ArrowDown':
+                return 'down';
+            case 'KeyA':
+            case 'ArrowLeft':
+                return 'left';
+        }
+    }
+}
+const outerFuncVar = outerFunc();
+
+Далее использовал здесь:
+keyDownHandler(e) {
+        if (!this.status.isPlaying()) return;
+
+        const direction = outerFuncVar(e.code);
+
+        if (this.canSetDirection(direction)) this.snake.setDirection(direction);
+    },
+
+
+
+2. Не выполняя код, ответить, что выведет браузер и почему:
+a.
+if (!("a" in window)) {
+var a = 1;
+}
+alert(a);
+
+Выдаст undefined, потому что условие не будет выполнено => а не получит значение
+
+b.
+var b = function a(x) {
+x && a(--x);
+};
+alert(a);
+
+алерта А не будет, т.к. а не определена. Это имя функции, которая присвоена Б.
+
+c.
+function a(x) {
+return x * 2;
+}
+var a;
+alert(a);
+
+так-с... здесь мы объявляем переменную и и функцию одним именем.
+Переменная без значения, а функция существует и она доминирует.
+Следовательно мы присваиваем переменной функцию: ...a = func...
+
+d.
+function b(x, y, a) {
+arguments[2] = 10;
+alert(a);
+}
+b(1, 2, 3);
+
+выдаст 10, т.к. переприсваиваем третий аргумент а и неважно, что мы передаем в функцию.
+
+e. *
+function a() {
+alert(this);
+}
+a.call(null);
+
+Вернется пустой объект. В данном случае Window, как объект функции alert.
